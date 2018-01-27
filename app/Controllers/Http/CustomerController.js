@@ -1,8 +1,5 @@
 'use strict'
 
-const Customer = use('App/Models/Customer')
-const Database = use('Database')
-
 class CustomerController {
   async index({ response }) {
     response.json({
