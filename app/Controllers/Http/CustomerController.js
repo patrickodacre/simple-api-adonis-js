@@ -1,45 +1,83 @@
 'use strict'
-
 const Customer = use('App/Models/Customer')
-const Database = use('Database')
 
 class CustomerController {
   async index({ response }) {
-    response.json({
-      greeting: 'Here are your customers from index.'
+    const customers = await Customer.all()
+
+    response.status(200).json({
+      message: 'Here are your customers.',
+      data: customers
     })
   }
 
   async store({ request, response, params: { id } }) {
-    const body = request.post()
+    const { name, description } = request.post()
 
-    response.json({
+    // save and get instance back
+    const customer = await Customer.create({ name, description })
+
+    response.status(201).json({
       message: 'Successfully created a new customer.',
-      data: body
+      data: customer
     })
   }
 
   async show({ response, params: { id } }) {
-    response.json({
-      message: 'Here is your customer.',
-      id
-    })
+    const customer = await Customer.find(id)
+
+    if (customer) {
+      response.status(200).json({
+        message: 'Here is your customer.',
+        data: customer
+      })
+    } else {
+      response.status(404).json({
+        message: 'Customer not found.',
+        id
+      })
+    }
   }
 
   async update({ request, response, params: { id } }) {
-    const body = request.post()
+    const customer = await Customer.find(id)
 
-    response.json({
-      message: 'Successfully updated a new customer.',
-      data: body
-    })
+    if (customer) {
+      const { name, description } = request.post()
+
+      customer.name = name
+      customer.description = description
+
+      await customer.save()
+
+      response.status(200).json({
+        message: 'Successfully updated this customer.',
+        data: customer
+      })
+    } else {
+      response.status(404).json({
+        message: 'Customer not found.',
+        id
+      })
+    }
   }
 
   async delete({ response, params: { id } }) {
-    response.json({
-      message: 'Successfully deleted customer.',
-      id
-    })
+    const customer = await Customer.find(id)
+
+    if (customer) {
+      await customer.delete()
+
+      response.status(200).json({
+        message: 'Successfully deleted this customer.',
+        id
+      })
+    } else {
+      response.status(404).json({
+        message: 'Customer not found.',
+        id
+      })
+    }
   }
 }
 
