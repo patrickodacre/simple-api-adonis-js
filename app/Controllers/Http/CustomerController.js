@@ -1,14 +1,9 @@
 'use strict'
 const Customer = use('App/Models/Customer')
-const Database = use('Database')
 
 class CustomerController {
   async index({ response }) {
-    // LUCID
-    // const customers = await Customer.all()
-
-    // QB
-    const customers = await Database.select('*').from('customers')
+    const customers = await Customer.all()
 
     response.status(200).json({
       message: 'Here are your customers.',
@@ -19,27 +14,17 @@ class CustomerController {
   async store({ request, response, params: { id } }) {
     const { name, description } = request.post()
 
-    // LUCID
-    // const customer = await Customer.create({ name, description })
-
-    // QB
-    const customerID = await Database.table('customers').insert({
-      name,
-      description
-    })
+    // save and get instance back
+    const customer = await Customer.create({ name, description })
 
     response.status(201).json({
       message: 'Successfully created a new customer.',
-      data: customerID
+      data: customer
     })
   }
 
   async show({ response, params: { id } }) {
-    // LUCID
-    // const customer = await Customer.find(id)
-
-    // QB
-    const customer = await Database.from('customers').where('id', id)
+    const customer = await Customer.find(id)
 
     if (customer) {
       response.status(200).json({
@@ -55,20 +40,19 @@ class CustomerController {
   }
 
   async update({ request, response, params: { id } }) {
-    // LUCID
-    // const customer = await Customer.find(id)
+    const customer = await Customer.find(id)
 
-    const { name, description } = request.post()
+    if (customer) {
+      const { name, description } = request.post()
 
-    // QB
-    const affectedRows = await Database.table('customers')
-      .where('id', id)
-      .update({ name, description })
+      customer.name = name
+      customer.description = description
 
-    if (affectedRows) {
+      await customer.save()
+
       response.status(200).json({
         message: 'Successfully updated this customer.',
-        id
+        data: customer
       })
     } else {
       response.status(404).json({
@@ -79,15 +63,11 @@ class CustomerController {
   }
 
   async delete({ response, params: { id } }) {
-    // LUCID
-    // const customer = await Customer.find(id)
+    const customer = await Customer.find(id)
 
-    // QB
-    const affectedRows = await Database.table('customers')
-      .where('id', id)
-      .delete()
+    if (customer) {
+      await customer.delete()
 
-    if (affectedRows) {
       response.status(200).json({
         message: 'Successfully deleted this customer.',
         id
