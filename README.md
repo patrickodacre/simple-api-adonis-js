@@ -1,28 +1,5 @@
-# Adonis API application
+# Simple API with AdonisJS
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+This project is from the [Build a Simple API with AdonisJS course](https://www.youtube.com/watch?v=5wzcRtrRVd4&list=PLoCq0WM_wHG-rFQEsShMQkgGcTO1Hmnvx) found on YouTube.
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
-
-## Setup
-
-Use the adonis command to install the blueprint
-
-```bash
-adonis new yardstick --api-only
-```
-
-or manually clone the repo and then run `npm install`.
-
-
-### Migrations
-
-Run the following command to run startup migrations.
-
-```js
-adonis migration:run
-```
+[Subscribe to the channel](https://www.youtube.com/channel/UCF5w1QdWroWOoxxXMgp88AQ?sub_confirmation=1) to catch all my videos. I publish new tutorials throughout the week on VueJS and NodeJS / AdonisJS.
