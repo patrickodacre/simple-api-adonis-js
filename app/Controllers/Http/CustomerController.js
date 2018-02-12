@@ -11,7 +11,7 @@ class CustomerController {
     })
   }
 
-  async store({ request, response, params: { id } }) {
+  async store({ request, response }) {
     const { name, description } = request.post()
 
     // save and get instance back
@@ -23,16 +23,14 @@ class CustomerController {
     })
   }
 
-  async show({ request, response, params: { id } }) {
-    const customer = request.post().customer
-
+  async show({ request, response }) {
     response.status(200).json({
       message: 'Here is your customer.',
-      data: customer
+      data: request.post().customer
     })
   }
 
-  async update({ request, response, params: { id } }) {
+  async update({ request, response }) {
     const { name, description, customer } = request.post()
 
     customer.name = name
