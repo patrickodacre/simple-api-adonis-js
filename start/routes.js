@@ -22,6 +22,7 @@ Route.get('/', ({ request, response }) => {
   //   return { greeting: 'Hello world in JSON' }
 })
 
+// Customers
 Route.get('customers', 'CustomerController.index')
 Route.get('customers/:id', 'CustomerController.show').middleware([
   'findCustomer'
@@ -33,3 +34,21 @@ Route.patch('customers/:id', 'CustomerController.update').middleware([
 Route.delete('customers/:id', 'CustomerController.delete').middleware([
   'findCustomer'
 ])
+
+// projects
+Route.get('projects', 'ProjectController.index')
+Route.get('projects/:id', 'ProjectController.show').middleware(['findProject'])
+Route.post('projects', 'ProjectController.store')
+Route.patch('projects/:id', 'ProjectController.update').middleware([
+  'findProject'
+])
+Route.delete('projects/:id', 'ProjectController.delete').middleware([
+  'findProject'
+])
+
+// tasks
+Route.get('tasks', 'TaskController.index')
+Route.get('tasks/:id', 'TaskController.show').middleware(['findTask'])
+Route.post('tasks', 'TaskController.store')
+Route.patch('tasks/:id', 'TaskController.update').middleware(['findTask'])
+Route.delete('tasks/:id', 'TaskController.delete').middleware(['findTask'])

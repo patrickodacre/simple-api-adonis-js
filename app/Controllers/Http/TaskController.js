@@ -6,112 +6,54 @@ class TaskController {
   async index({ response }) {
     const tasks = await Task.all()
 
-    if (tasks) {
-      response.status(200).json({
-        message: 'Here are your tasks',
-        data: tasks
-      })
-    } else {
-      response.status(500).json({
-        message: 'Could not get your tasks.'
-      })
-    }
+    response.status(200).json({
+      message: 'Here are your tasks',
+      data: tasks
+    })
   }
 
   async store({ request, response }) {
-    const task = new Task()
-
     const { name, description, project_id } = request.post()
+
+    const task = await Task.create({ name, description, project_id })
+
+    response.status(201).json({
+      message: 'Successfully created a new task.',
+      data: task
+    })
+  }
+
+  async show({ request, response }) {
+    response.status(200).json({
+      message: 'Here is your task.',
+      data: request.post().task
+    })
+  }
+
+  async update({ request, response, params: { id } }) {
+    const { name, description, project_id, task } = request.post()
 
     task.name = name
     task.description = description
     task.project_id = project_id
 
-    const saved = await task.save()
+    await task.save()
 
-    if (saved) {
-      response.status(201).json({
-        message: 'Created a new task.',
-        data: task
-      })
-    } else {
-      response.status(500).json({
-        message: 'Could not create your task.',
-        data: { name, description, project_id }
-      })
-    }
+    response.status(200).json({
+      message: 'Successfully updated this task.',
+      data: task
+    })
   }
 
-  async show({ request, response, params: { id } }) {
-    const task = await Task.find(id)
+  async delete({ request, response, params: { id } }) {
+    const { task } = request.post()
 
-    if (task) {
-      response.status(200).json({
-        message: 'Here is your task.',
-        data: task
-      })
-    } else {
-      response.status(404).json({
-        message: 'Task not found.',
-        id
-      })
-    }
-  }
+    await task.delete()
 
-  async update({ request, response, params: { id } }) {
-    const task = await Task.find(id)
-
-    if (task) {
-      const { name, description, project_id } = request.post()
-
-      task.name = name
-      task.description = description
-      task.project_id = project_id
-
-      const saved = await task.save()
-
-      if (saved) {
-        response.status(200).json({
-          message: 'Updated task.',
-          data: task
-        })
-      } else {
-        response.status(500).json({
-          message: 'Could not update your task.',
-          data: { name, description, project_id }
-        })
-      }
-    } else {
-      response.status(404).json({
-        message: 'Task not found.',
-        id
-      })
-    }
-  }
-
-  async delete({ response, params: { id } }) {
-    const task = await Task.find(id)
-
-    if (task) {
-      const deleted = await task.delete()
-
-      if (deleted) {
-        response.status(200).json({
-          message: 'Deleted task.',
-          id
-        })
-      } else {
-        response.status(500).json({
-          message: 'Could not delete your task.',
-          id
-        })
-      }
-    } else {
-      response.status(404).json({
-        message: 'Task not found.',
-        id
-      })
-    }
+    response.status(200).json({
+      message: 'Deleted task.',
+      id
+    })
   }
 }
 

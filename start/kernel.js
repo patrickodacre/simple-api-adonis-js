@@ -32,7 +32,9 @@ const globalMiddleware = ['Adonis/Middleware/BodyParser']
 */
 const namedMiddleware = {
   auth: 'Adonis/Middleware/Auth',
-  findCustomer: 'App/Middleware/FindCustomer'
+  findCustomer: 'App/Middleware/FindCustomer',
+  findProject: 'App/Middleware/FindProject',
+  findTask: 'App/Middleware/FindTask'
 }
 
 /*
