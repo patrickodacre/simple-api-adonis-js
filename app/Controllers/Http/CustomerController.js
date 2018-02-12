@@ -23,61 +23,38 @@ class CustomerController {
     })
   }
 
-  async show({ response, params: { id } }) {
-    const customer = await Customer.find(id)
+  async show({ request, response, params: { id } }) {
+    const customer = request.post().customer
 
-    if (customer) {
-      response.status(200).json({
-        message: 'Here is your customer.',
-        data: customer
-      })
-    } else {
-      response.status(404).json({
-        message: 'Customer not found.',
-        id
-      })
-    }
+    response.status(200).json({
+      message: 'Here is your customer.',
+      data: customer
+    })
   }
 
   async update({ request, response, params: { id } }) {
-    const customer = await Customer.find(id)
+    const { name, description, customer } = request.post()
 
-    if (customer) {
-      const { name, description } = request.post()
+    customer.name = name
+    customer.description = description
 
-      customer.name = name
-      customer.description = description
+    await customer.save()
 
-      await customer.save()
-
-      response.status(200).json({
-        message: 'Successfully updated this customer.',
-        data: customer
-      })
-    } else {
-      response.status(404).json({
-        message: 'Customer not found.',
-        id
-      })
-    }
+    response.status(200).json({
+      message: 'Successfully updated this customer.',
+      data: customer
+    })
   }
 
-  async delete({ response, params: { id } }) {
-    const customer = await Customer.find(id)
+  async delete({ request, response, params: { id } }) {
+    const customer = request.post().customer
 
-    if (customer) {
-      await customer.delete()
+    await customer.delete()
 
-      response.status(200).json({
-        message: 'Successfully deleted this customer.',
-        id
-      })
-    } else {
-      response.status(404).json({
-        message: 'Customer not found.',
-        id
-      })
-    }
+    response.status(200).json({
+      message: 'Successfully deleted this customer.',
+      id
+    })
   }
 }
 
