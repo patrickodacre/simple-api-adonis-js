@@ -1,9 +1,24 @@
 'use strict'
 const Customer = use('App/Models/Customer')
+const Database = use('Database')
 
 class CustomerController {
-  async index({ response }) {
+  async index({ request, response }) {
     const customers = await Customer.all()
+
+    // const { withProjects } = request.get()
+
+    // const query = Customer.query()
+
+    // if (withProjects) {
+    //   query.with('projects')
+    //   //   query.with('projects', projectsQuery => {
+    //   //     // projectsQuery.with('customer')
+    //   //     // projectsQuery.where('completed', true)
+    //   //   })
+    // }
+
+    // const customers = await query.fetch()
 
     response.status(200).json({
       message: 'Here are your customers.',
@@ -24,9 +39,13 @@ class CustomerController {
   }
 
   async show({ request, response }) {
+    let customer = request.post().customer
+
+    // customer = await customer.projects().fetch()
+
     response.status(200).json({
       message: 'Here is your customer.',
-      data: request.post().customer
+      data: customer
     })
   }
 
