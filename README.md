@@ -22,5 +22,5 @@ git checkout lucid_custom_queries
 npm install
 
 # Run migrations
-adonis migrations:run
+adonis migration:run
 ```
