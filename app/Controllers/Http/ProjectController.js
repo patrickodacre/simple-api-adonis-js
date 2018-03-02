@@ -14,9 +14,17 @@ class ProjectController {
   }
 
   async store({ request, response }) {
-    const { name, description, customer_id } = request.post()
+    let tags
+
+    const { name, description, customer_id, tags: chosenTags } = request.post()
 
     const project = await Project.create({ name, description, customer_id })
+
+    if (chosenTags && chosenTags.length > 0) {
+      await project.tags().attach(chosenTags)
+      tags = project.tags().fetch()
+      project.tags = tags
+    }
 
     response.status(201).json({
       message: 'Successfully created a new project.',
@@ -24,21 +32,41 @@ class ProjectController {
     })
   }
 
-  async show({ request, response }) {
+  async show({ request, response, params: { id } }) {
+    const { project } = request.post()
+
+    const tags = await project.tags().fetch()
+
+    project.tags = tags
+
     response.status(200).json({
       message: 'Here is your project.',
-      data: request.post().project
+      data: project
     })
   }
 
   async update({ request, response }) {
-    const { name, description, customer_id, project } = request.post()
+    let tags
+    const {
+      name,
+      description,
+      customer_id,
+      project,
+      tags: updatedTags
+    } = request.post()
 
-    project.name = name
-    project.description = description
-    project.customer_id = customer_id
+    project.name = project.name || name
+    project.description = project.description || description
+    project.customer_id = project.customer_id || customer_id
 
     await project.save()
+
+    if (updatedTags && updatedTags.length > 0) {
+      await project.tags().detach()
+      await project.tags().attach(updatedTags)
+      tags = await project.tags().fetch()
+      project.tags = tags
+    }
 
     response.status(200).json({
       message: 'Successfully updated this project.',
@@ -48,12 +76,12 @@ class ProjectController {
 
   async delete({ request, response, params: { id } }) {
     const { project } = request.post()
-
+    await project.tags().detach()
     await project.delete()
 
     response.status(200).json({
       message: 'Successfully deleted this project.',
-      id
+      deleted: true
     })
   }
 }
