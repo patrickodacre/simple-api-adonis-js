@@ -39,8 +39,8 @@ class CustomerController {
   async update({ request, response }) {
     const { name, description, customer } = request.post()
 
-    customer.name = name
-    customer.description = description
+    customer.name = customer.name || name
+    customer.description = customer.description || description
 
     await customer.save()
 

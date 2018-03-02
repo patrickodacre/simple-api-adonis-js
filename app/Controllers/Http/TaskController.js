@@ -33,9 +33,9 @@ class TaskController {
   async update({ request, response, params: { id } }) {
     const { name, description, project_id, task } = request.post()
 
-    task.name = name
-    task.description = description
-    task.project_id = project_id
+    task.name = task.name || name
+    task.description = task.description || description
+    task.project_id = task.project_id || project_id
 
     await task.save()
 
