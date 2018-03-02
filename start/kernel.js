@@ -34,7 +34,8 @@ const namedMiddleware = {
   auth: 'Adonis/Middleware/Auth',
   findCustomer: 'App/Middleware/FindCustomer',
   findProject: 'App/Middleware/FindProject',
-  findTask: 'App/Middleware/FindTask'
+  findTask: 'App/Middleware/FindTask',
+  findTag: 'App/Middleware/FindTag'
 }
 
 /*
