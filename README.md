@@ -18,8 +18,4 @@ git clone https://github.com/patrickodacre/simple-api-adonis-js.git
 git checkout lucid_many_to_many
 
 npm install
-
-# Run migrations
-adonis migration:run
-adonis seed --files="CustomerSeeder.js, TagSeeder.js"
 ```
