@@ -52,3 +52,10 @@ Route.get('tasks/:id', 'TaskController.show').middleware(['findTask'])
 Route.post('tasks', 'TaskController.store')
 Route.patch('tasks/:id', 'TaskController.update').middleware(['findTask'])
 Route.delete('tasks/:id', 'TaskController.delete').middleware(['findTask'])
+
+// tags
+Route.get('tags', 'TagController.index')
+Route.get('tags/:id', 'TagController.show').middleware(['findTag'])
+Route.post('tags', 'TagController.store')
+Route.patch('tags/:id', 'TagController.update').middleware(['findTag'])
+Route.delete('tags/:id', 'TagController.delete').middleware(['findTag'])
