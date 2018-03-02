@@ -14,7 +14,7 @@ const Factory = use('Factory')
 
 class TagSeeder {
   async run() {
-    const tags = await Factory.model('App/Models/Customer').createMany(5)
+    const tags = await Factory.model('App/Models/Tag').createMany(5)
   }
 }
 
