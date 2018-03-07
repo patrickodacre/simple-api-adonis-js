@@ -22,7 +22,7 @@ class ProjectController {
 
     if (chosenTags && chosenTags.length > 0) {
       await project.tags().attach(chosenTags)
-      tags = project.tags().fetch()
+      tags = await project.tags().fetch()
       project.tags = tags
     }
 
