@@ -47,7 +47,6 @@ class TagController {
 
   async delete({ request, response }) {
     const { tag } = request.post()
-    await tag.projects().detach()
     await tag.delete()
 
     response.status(200).json({

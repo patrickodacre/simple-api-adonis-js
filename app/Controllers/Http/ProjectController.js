@@ -76,7 +76,6 @@ class ProjectController {
 
   async delete({ request, response, params: { id } }) {
     const { project } = request.post()
-    await project.tags().detach()
     await project.delete()
 
     response.status(200).json({
