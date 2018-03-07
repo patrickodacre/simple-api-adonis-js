@@ -19,3 +19,11 @@ git checkout lucid_many_to_many
 
 npm install
 ```
+
+## Tutorial: Questions to be Answered
+
+1.  How do I create a migration, a model and a controller to manage Tags?
+2.  How do I create a pivot table for projects and tags?
+3.  What should this pivot table be named?
+4.  How do I setup the relationship between Project and Tag
+5.  What special steps do I have to take in Project and Tag controller to manage this relationship in the pivot table?
