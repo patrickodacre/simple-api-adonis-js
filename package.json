@@ -7,10 +7,7 @@
     "start": "node server.js",
     "test": "node ace test"
   },
-  "keywords": [
-    "adonisjs",
-    "adonis-app"
-  ],
+  "keywords": ["adonisjs", "adonis-app"],
   "author": "",
   "license": "UNLICENSED",
   "private": true,
@@ -23,8 +20,7 @@
     "@adonisjs/framework": "^5.0.4",
     "@adonisjs/ignitor": "^2.0.5",
     "@adonisjs/lucid": "^5.0.3",
-    "mysql": "^2.15.0",
-    "npm-check-updates": "^2.14.1"
+    "mysql": "^2.15.0"
   },
   "devDependencies": {},
   "autoload": {
