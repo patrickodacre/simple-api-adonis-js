@@ -1,7 +1,6 @@
 'use strict'
 
 const Project = use('App/Models/Project')
-const Database = use('Database')
 
 class ProjectController {
   async index({ response }) {
