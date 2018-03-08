@@ -34,9 +34,9 @@ class ProjectController {
   async update({ request, response }) {
     const { name, description, customer_id, project } = request.post()
 
-    project.name = name
-    project.description = description
-    project.customer_id = customer_id
+    project.name = name || project.name
+    project.description = description || project.description
+    project.customer_id = customer_id || project.customer_id
 
     await project.save()
 
