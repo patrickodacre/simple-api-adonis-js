@@ -14,16 +14,13 @@ class ProjectController {
   }
 
   async store({ request, response }) {
-    let tags
-
-    const { name, description, customer_id, tags: chosenTags } = request.post()
+    const { name, description, customer_id, tags } = request.post()
 
     const project = await Project.create({ name, description, customer_id })
 
-    if (chosenTags && chosenTags.length > 0) {
-      await project.tags().attach(chosenTags)
-      tags = await project.tags().fetch()
-      project.tags = tags
+    if (tags && tags.length > 0) {
+      await project.tags().attach(tags)
+      project.tags = await project.tags().fetch()
     }
 
     response.status(201).json({
@@ -46,26 +43,18 @@ class ProjectController {
   }
 
   async update({ request, response }) {
-    let tags
-    const {
-      name,
-      description,
-      customer_id,
-      project,
-      tags: updatedTags
-    } = request.post()
+    const { name, description, customer_id, project, tags } = request.post()
 
-    project.name = project.name || name
-    project.description = project.description || description
-    project.customer_id = project.customer_id || customer_id
+    project.name = name || project.name
+    project.description = description || project.description
+    project.customer_id = customer_id || project.customer_id
 
     await project.save()
 
-    if (updatedTags && updatedTags.length > 0) {
+    if (tags && tags.length > 0) {
       await project.tags().detach()
-      await project.tags().attach(updatedTags)
-      tags = await project.tags().fetch()
-      project.tags = tags
+      await project.tags().attach(tags)
+      project.tags = await project.tags().fetch()
     }
 
     response.status(200).json({
