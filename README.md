@@ -15,7 +15,7 @@ Once you clone the repo, install dependencies and run migrations, you'll need to
 git clone https://github.com/patrickodacre/simple-api-adonis-js.git
 
 # If on Master branch...
-git checkout lucid_many_to_many
+git checkout lucid_many_to_many_completed
 
 npm install
 ```
