@@ -34,8 +34,8 @@ class TagController {
   async update({ request, response }) {
     const { name, description, tag } = request.post()
 
-    tag.name = tag.name || name
-    tag.description = tag.description || description
+    tag.name = name || tag.name
+    tag.description = description || tag.description
 
     await tag.save()
 
